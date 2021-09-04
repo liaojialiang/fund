@@ -1,3 +1,7 @@
 spring:
   datasource:
     url: jdbc:sqlite:fund.db
+
+fund:
+  url:
+    detail: https://fundmobapi.eastmoney.com/FundMApi/FundVarietieValuationDetail.ashx?version=6.2.5&FCODE=%s&plat=Iphone&UserId=&product=EFund&appversion=6.2.5&AppType=Iphone&Serverversion=6.2.5&deviceid=5C1164BA-3D4A-4953-A488-00E47222D4BB

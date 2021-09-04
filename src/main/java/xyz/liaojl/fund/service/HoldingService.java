@@ -14,9 +14,15 @@ public class HoldingService {
     @Autowired
     private HoldingRepository holdingRepository;
 
+    @Autowired
+    private FundService fundService;
+
     public Holding updateHolding(Holding holding) {
-        if (holding.getId() == null || !holdingRepository.existsById(holding.getId()))
-            throw new CommonException("Fund Id not exists!");
+        Holding existed = holdingRepository.findById(holding.getId())
+                .orElseThrow(() -> new CommonException("Fund Id not exists!"));
+        holding.setName(existed.getName());
+        holding.setCreateTime(existed.getCreateTime());
+        holding.setUpdateTime(LocalDateTime.now());
         return holdingRepository.save(holding);
     }
 
@@ -28,6 +34,7 @@ public class HoldingService {
         if (holdingRepository.existsByCode(holding.getCode()))
             throw new CommonException("Fund with code:" + holding.getCode() + "already exists!");
         holding.setCreateTime(LocalDateTime.now());
+        holding.setName(fundService.getNameByCode(holding.getCode()));
         return holdingRepository.save(holding);
     }
 
